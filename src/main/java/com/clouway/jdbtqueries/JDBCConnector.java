@@ -1,6 +1,8 @@
-package com.clouway.jdbtrystuff;
+package com.clouway.jdbtqueries;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 /**
  * Created by clouway on 25.10.16.
@@ -23,7 +25,7 @@ public class JDBCConnector {
 
     public Connection getConnection() throws SQLException, ClassNotFoundException {
         Class.forName(JDBC_DRIVER);
-        Connection connection = DriverManager.getConnection(DB_URL,USER,PASSWORD);
+        Connection connection = DriverManager.getConnection(DB_URL, USER, PASSWORD);
         return connection;
     }
 }
