@@ -8,8 +8,6 @@ build/
 gradle/
 gradlew
 
-settings.gradle
-
 
 *.class
 
@@ -30,3 +28,5 @@ hs_err_pid*
 /sqlqueries/gradlew
 /sqlqueries/
 
+
+/gradlew.bat
