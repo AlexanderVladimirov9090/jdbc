@@ -11,10 +11,10 @@ import java.sql.SQLException;
  * @author Alexander Vladimirov
  *         <alexandervladimirov1902@gmail.com>
  */
-public class TableAgent {
+public class DatabaseAgent {
     private final Connection dbConnection;
 
-    public TableAgent(Connection dbConnection) {
+    public DatabaseAgent(Connection dbConnection) {
         this.dbConnection = dbConnection;
     }
 
@@ -23,8 +23,9 @@ public class TableAgent {
         try {
             statement = dbConnection.prepareStatement("SELECT * FROM " + table);
             ResultSet resultSet = statement.executeQuery();
+
             StringBuilder stringBuilder = new StringBuilder();
-            while (resultSet.next()) {
+                        while (resultSet.next()) {
                 int id = resultSet.getInt(1);
                 String userName = resultSet.getString(2);
                 String password = resultSet.getString(3);

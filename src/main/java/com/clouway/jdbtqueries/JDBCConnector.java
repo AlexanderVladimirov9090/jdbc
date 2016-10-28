@@ -23,9 +23,29 @@ public class JDBCConnector {
         this.PASSWORD = password;
     }
 
-    public Connection getConnection() throws SQLException, ClassNotFoundException {
-        Class.forName(JDBC_DRIVER);
-        Connection connection = DriverManager.getConnection(DB_URL, USER, PASSWORD);
-        return connection;
+    public Connection getConnection() throws NoConnectionException {
+        try {
+            Class.forName(JDBC_DRIVER);
+            isUserProvided();
+            isPasswordProvided();
+            Connection connection = DriverManager.getConnection(DB_URL, USER, PASSWORD);
+            return connection;
+        } catch (ClassNotFoundException e) {
+            throw new NoConnectionException("You did not provide SQL driver");
+        } catch (SQLException e) {
+            throw new NoConnectionException("You did not provide URL for Database");
+        }
+    }
+
+    private void isPasswordProvided() throws NoConnectionException {
+        if (PASSWORD == null) {
+            throw new NoConnectionException("Did not provide password.");
+        }
+    }
+
+    private void isUserProvided() throws NoConnectionException {
+        if (USER == null) {
+            throw new NoConnectionException("Did not provide user.");
+        }
     }
 }

@@ -12,11 +12,11 @@ public class Demo {
     public static void main(String[] args) {
         JDBCConnector jdbcConnector = new JDBCConnector("com.mysql.jdbc.Driver","jdbc:mysql://localhost/jdbc_database","root","clouway.com");
         try {
-            TableAgent tableAgent = new TableAgent(jdbcConnector.getConnection());
-            System.out.println(tableAgent.getTableToString("users"));
+            DatabaseAgent databaseAgent = new DatabaseAgent(jdbcConnector.getConnection());
+            System.out.println(databaseAgent.getTableToString("users"));
         } catch (SQLException e) {
             e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (NoConnectionException e) {
             e.printStackTrace();
         }
     }
