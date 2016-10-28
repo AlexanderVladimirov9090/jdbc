@@ -18,33 +18,34 @@ public class DatabaseAgent {
         this.dbConnection = dbConnection;
     }
 
-    public String getTableToString(String table) throws SQLException {
+    public String getTableToString(String table) throws SQLException, NoConnectionException {
         PreparedStatement statement = null;
         try {
             statement = dbConnection.prepareStatement("SELECT * FROM " + table);
             ResultSet resultSet = statement.executeQuery();
 
             StringBuilder stringBuilder = new StringBuilder();
-                        while (resultSet.next()) {
+            while (resultSet.next()) {
                 int id = resultSet.getInt(1);
                 String userName = resultSet.getString(2);
                 String password = resultSet.getString(3);
                 String email = resultSet.getString(4);
                 stringBuilder.append("\nID: ").append(id).append("\nUserName:").append(userName).append("\nPassword: ").append(password).append("\nEmail: ").append(email).append("\n");
             }
+
             return stringBuilder.toString();
         } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             dbConnection.close();
         }
-        return "";
+        throw new NoConnectionException("Did now get any content from Database.");
     }
 
-    public String getColumn(String column) throws SQLException {
+    public String getColumn(String column, String table) throws NoConnectionException{
         PreparedStatement statement = null;
         try {
-            statement = dbConnection.prepareStatement("SELECT " + column + " FROM users");
+            statement = dbConnection.prepareStatement("SELECT " + column + " FROM " + table);
             ResultSet resultSet = statement.executeQuery();
             StringBuilder stringBuilder = new StringBuilder();
             while (resultSet.next()) {
@@ -52,12 +53,15 @@ public class DatabaseAgent {
                 stringBuilder.append("\n").append(column).append(": ").append(result);
             }
             return stringBuilder.toString();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }finally {
-            dbConnection.close();
+        } catch (SQLException ignore) {
+           throw new NoConnectionException("No");
+        } finally {
+            try {
+                dbConnection.close();
+            } catch (SQLException e) {
+                throw new NoConnectionException("");
+            }
         }
-        return "";
     }
 
     public void updateColumn(String table, String column, String content, String columnForWhere, String newContent) throws SQLException {
@@ -67,7 +71,7 @@ public class DatabaseAgent {
             statement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             dbConnection.close();
         }
     }
@@ -79,7 +83,7 @@ public class DatabaseAgent {
             statement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             dbConnection.close();
         }
     }
@@ -87,11 +91,11 @@ public class DatabaseAgent {
     public void insetContent(String table, String columns, String values) throws SQLException {
         PreparedStatement statement = null;
         try {
-            statement = dbConnection.prepareStatement("INSERT INTO " + table + " ( " + columns +" ) " + "VALUES "+ " ( " + values + " ) ");
+            statement = dbConnection.prepareStatement("INSERT INTO " + table + " ( " + columns + " ) " + "VALUES " + " ( " + values + " ) ");
             statement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             dbConnection.close();
         }
     }
@@ -99,31 +103,31 @@ public class DatabaseAgent {
     public void dropTable(String table) throws SQLException {
         PreparedStatement statement = null;
         try {
-            statement = dbConnection.prepareStatement("DROP TABLE " + table );
+            statement = dbConnection.prepareStatement("DROP TABLE " + table);
             statement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             dbConnection.close();
         }
     }
 
-    public void addColumn(String table,String column,String dataType) throws SQLException {
+    public void addColumn(String table, String column, String dataType) throws SQLException {
         PreparedStatement statement = null;
         try {
-            statement = dbConnection.prepareStatement("ALTER TABLE " + table + " ADD " + column + " "+ dataType);
+            statement = dbConnection.prepareStatement("ALTER TABLE " + table + " ADD " + column + " " + dataType);
             statement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             dbConnection.close();
         }
     }
 
-    public String getColumnByPattern(String table, String columns, String columnName, String pattern) throws SQLException {
+    public String getColumnByPattern(String table, String columns, String columnName, String pattern) throws SQLException, NoConnectionException {
         PreparedStatement statement = null;
         try {
-            statement = dbConnection.prepareStatement("SELECT "+ columns + " FROM "+ table + " WHERE " + columnName + " LIKE " + pattern  );
+            statement = dbConnection.prepareStatement("SELECT " + columns + " FROM " + table + " WHERE " + columnName + " LIKE " + pattern);
             StringBuilder stringBuilder = new StringBuilder();
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -133,9 +137,9 @@ public class DatabaseAgent {
             return stringBuilder.toString();
         } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             dbConnection.close();
         }
-        return "";
+        throw new NoConnectionException("Did not get any content from DataBase.");
     }
 }
