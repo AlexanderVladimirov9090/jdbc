@@ -1,13 +1,13 @@
 package com.clouway.jdbtqueries;
 
 /**
- * Created by clouway on 26.10.16.
+ * Created by clouway on 02.11.16.
  *
  * @author Alexander Vladimirov
  *         <alexandervladimirov1902@gmail.com>
  */
-public class NoConnectionException extends RuntimeException {
-    public NoConnectionException(String message) {
+public class NoRecordFoundException extends RuntimeException {
+    public NoRecordFoundException(String message) {
         super(message);
     }
 }
