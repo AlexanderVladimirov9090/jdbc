@@ -13,7 +13,4 @@ public interface DataAccessObject {
     <T> List<T> fetchRecords(String query) throws NoRecordFoundException, NoConnectionException;
 
     void update(String query);
-
-    void createTable(String query);
-
 }

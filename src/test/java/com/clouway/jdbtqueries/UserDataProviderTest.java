@@ -64,6 +64,11 @@ public class UserDataProviderTest {
         assertThat(actualUser.getId(), is(equalTo(2)));
     }
 
+    @Test(expected = NoRecordFoundException.class)
+    public void getNoneExistingUser() throws NoConnectionException {
+        UserDataProvider userDataProvider = new UserDataProvider(jdbcConnector.getConnection(), new LinkedList());
+        userDataProvider.fetchRecords("SELECT * FROM  users WHERE USER_NAME = nouser");
+    }
   /*
     @Test
     public void getUserPassword(){

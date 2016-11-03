@@ -27,13 +27,18 @@ public class UserDataProvider implements DataAccessObject {
             statement = dbConnection.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-               records.add(fillObject(resultSet));
+                records.add(fillObject(resultSet));
             }
             dbConnection.close();
+
             return records;
         } catch (SQLException e) {
             throw new NoRecordFoundException("No record found in Database");
         }
+    }
+
+    public void update(String query) {
+
     }
 
     private User fillObject(ResultSet resultSet) throws SQLException {
@@ -45,38 +50,7 @@ public class UserDataProvider implements DataAccessObject {
         return user;
     }
 
-    public void update(String query) {
-
-    }
-
-    public void createTable(String query) {
-
-    }
-
-
-
-    /*public <T> User getRecord(String table, T iD) throws NoRecordFoundException, NoConnectionException {
-        PreparedStatement statement = null;
-        try {
-            int id = (Integer) iD;
-            statement = dbConnection.prepareStatement("SELECT * FROM " + table + " WHERE ID = " + id);
-            ResultSet resultSet = statement.executeQuery();
-            User user = new User();
-            while (resultSet.next()) {
-                user.setId(resultSet.getInt(1));
-                user.setUserName(resultSet.getString(2));
-                user.setPassword(resultSet.getString(3));
-                user.setEmail(resultSet.getString(4));
-
-            }
-            dbConnection.close();
-            return user;
-        } catch (SQLException e) {
-            throw new NoRecordFoundException("No record found in Database");
-        }
-    }
-*/
-   /*
+    /*
 
 
     public String getTableToString(String table) throws SQLException, NoConnectionException {
@@ -204,23 +178,5 @@ public class UserDataProvider implements DataAccessObject {
             dbConnection.close();
         }
     }
-
-    public String getColumnByPattern(String table, String columns, String columnName, String pattern) throws SQLException, NoConnectionException {
-        PreparedStatement statement = null;
-        try {
-            statement = dbConnection.prepareStatement("SELECT " + columns + " FROM " + table + " WHERE " + columnName + " LIKE " + pattern);
-            StringBuilder stringBuilder = new StringBuilder();
-            ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                String result = resultSet.getString(1);
-                stringBuilder.append("\n").append(columnName).append(": ").append(result);
-            }
-            return stringBuilder.toString();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            dbConnection.close();
-        }
-        throw new NoConnectionException("Did not get any content from DataBase.");
-    }*/
+*/
 }

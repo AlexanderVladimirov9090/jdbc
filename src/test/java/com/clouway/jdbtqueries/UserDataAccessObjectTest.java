@@ -49,9 +49,9 @@ public class UserDataAccessObjectTest {
     @Test
     public void createTable() {
         context.checking(new Expectations() {{
-            oneOf(dataAccessObject).createTable("CREATE TABLE table(TUTORIALS POINT column1 INT, PRIMARY KEY (column1));");
+            oneOf(dataAccessObject).update("CREATE TABLE table(TUTORIALS POINT column1 INT, PRIMARY KEY (column1));");
         }});
-        dataAccessObject.createTable("CREATE TABLE table(TUTORIALS POINT column1 INT, PRIMARY KEY (column1));");
+        dataAccessObject.update("CREATE TABLE table(TUTORIALS POINT column1 INT, PRIMARY KEY (column1));");
     }
 
     @Test(expected = NoTableOrDroppedTableException.class)
