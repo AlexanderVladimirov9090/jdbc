@@ -22,10 +22,10 @@ public class UserDataAccessObjectTest {
     @Test
     public void getRecords() {
         context.checking(new Expectations() {{
-            oneOf(dataAccessObject).getAllRecord("users", User.class);
+            oneOf(dataAccessObject).getAllRecord("users");
             will(returnValue(users));
         }});
-        dataAccessObject.getAllRecord("users", User.class);
+        dataAccessObject.getAllRecord("users");
     }
 
     @Test
@@ -68,21 +68,21 @@ public class UserDataAccessObjectTest {
         final User user = new User();
         context.checking(new Expectations() {{
             oneOf(dataAccessObject).createTable("users", user);
-            oneOf(dataAccessObject).getAllRecord("users", User.class);
+            oneOf(dataAccessObject).getAllRecord("users");
             will(returnValue(users));
         }});
         dataAccessObject.createTable("users", user);
-        dataAccessObject.getAllRecord("users", User.class);
+        dataAccessObject.getAllRecord("users");
     }
 
     @Test(expected = NoTableOrDroppedTableException.class)
     public void deleteTable(){
         context.checking(new Expectations() {{
             oneOf(dataAccessObject).deleteTable("users");
-            oneOf(dataAccessObject).getAllRecord("users", User.class);
+            oneOf(dataAccessObject).getAllRecord("users");
             will(throwException(new NoTableOrDroppedTableException("")));
         }});
         dataAccessObject.deleteTable("users");
-        dataAccessObject.getAllRecord("users", User.class);
+        dataAccessObject.getAllRecord("users");
     }
 }

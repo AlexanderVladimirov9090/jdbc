@@ -10,7 +10,7 @@ import java.util.List;
  *         <alexandervladimirov1902@gmail.com>
  */
 public interface DataAccessObject {
-    <T> List<T> getAllRecord(String table, Class typeOfRecord) throws NoRecordFoundException, NoConnectionException;
+    <T> List<T> getAllRecord(String table) throws NoRecordFoundException, NoConnectionException;
 
     <T> User getRecord(String table, T record) throws NoRecordFoundException, NoConnectionException;
 

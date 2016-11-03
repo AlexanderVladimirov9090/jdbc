@@ -21,7 +21,7 @@ public class UserDataProvider implements DataAccessObject {
         this.records = records;
     }
 
-    public <T> List<T> getAllRecord(String table, Class typeOfRecord) throws NoConnectionException {
+    public <T> List<T> getAllRecord(String table) throws NoConnectionException {
         PreparedStatement statement = null;
         try {
             statement = dbConnection.prepareStatement("SELECT * FROM " + table);
@@ -34,13 +34,9 @@ public class UserDataProvider implements DataAccessObject {
                 user.setEmail(resultSet.getString(4));
                 records.add(user);
             }
+            dbConnection.close();
             return records;
         } catch (SQLException e) {
-            try {
-                dbConnection.close();
-            } catch (SQLException e1) {
-                throw new NoConnectionException("No connection found");
-            }
             throw new NoRecordFoundException("No record found in Database");
         }
     }
@@ -48,8 +44,8 @@ public class UserDataProvider implements DataAccessObject {
     public <T> User getRecord(String table, T iD) throws NoRecordFoundException, NoConnectionException {
         PreparedStatement statement = null;
         try {
-            int id = (Integer)iD;
-            statement = dbConnection.prepareStatement("SELECT * FROM " + table + " WHERE ID = "+ id);
+            int id = (Integer) iD;
+            statement = dbConnection.prepareStatement("SELECT * FROM " + table + " WHERE ID = " + id);
             ResultSet resultSet = statement.executeQuery();
             User user = new User();
             while (resultSet.next()) {
@@ -59,13 +55,9 @@ public class UserDataProvider implements DataAccessObject {
                 user.setEmail(resultSet.getString(4));
 
             }
+            dbConnection.close();
             return user;
         } catch (SQLException e) {
-            try {
-                dbConnection.close();
-            } catch (SQLException e1) {
-                throw new NoConnectionException("Lost connection");
-            }
             throw new NoRecordFoundException("No record found in Database");
         }
     }
