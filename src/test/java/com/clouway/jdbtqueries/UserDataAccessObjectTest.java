@@ -4,7 +4,6 @@ import org.jmock.Expectations;
 import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Test;
 
-import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -20,69 +19,46 @@ public class UserDataAccessObjectTest {
     private List<User> users = new LinkedList<User>();
 
     @Test
-    public void getRecords() {
+    public void fetchRecords() {
         context.checking(new Expectations() {{
-            oneOf(dataAccessObject).getAllRecord("users");
+            oneOf(dataAccessObject).fetchRecords("SELECT * FROM  users");
             will(returnValue(users));
         }});
-        dataAccessObject.getAllRecord("users");
-    }
-
-    @Test
-    public void getRecord() {
-        final User user = new User();
-        context.checking(new Expectations() {{
-            oneOf(dataAccessObject).getRecord("users", user);
-            will(returnValue(user));
-        }});
-        dataAccessObject.getRecord("users", user);
+        dataAccessObject.fetchRecords("SELECT * FROM  users");
     }
 
     @Test
     public void updateRecord() {
-        final User user = new User();
-        final User updatedUser = new User();
         context.checking(new Expectations() {{
-            oneOf(dataAccessObject).updateRecord("users", user, updatedUser);
-            oneOf(dataAccessObject).getRecord("users", user);
-            will(returnValue(new User()));
+            oneOf(dataAccessObject).update("UPDATE users SET ID = 1,USER_NAME = 'gosho', PASSWORD = 'pass', EMAIL = 'email.@gmail.com");
         }});
-        dataAccessObject.updateRecord("users", user, updatedUser);
-        dataAccessObject.getRecord("users", user);
+        dataAccessObject.update("UPDATE users SET ID = 1,USER_NAME = 'gosho', PASSWORD = 'pass', EMAIL = 'email.@gmail.com");
     }
 
     @Test(expected = NoRecordFoundException.class)
-    public void deleteRecord(){
-        final User user = new User();
+    public void deleteRecord() {
         context.checking(new Expectations() {{
-            oneOf(dataAccessObject).deleteRecord("users", user);
-            oneOf(dataAccessObject).getRecord("users", user);
+            oneOf(dataAccessObject).update("DELETE FROM users WHERE USER_NAME = 'user'");
+            oneOf(dataAccessObject).fetchRecords("SELECT * FROM users WHERE USER_NAME = 'user'");
             will(throwException(new NoRecordFoundException("")));
         }});
-        dataAccessObject.deleteRecord("users", user);
-        dataAccessObject.getRecord("users", user);
+        dataAccessObject.update("DELETE FROM users WHERE USER_NAME = 'user'");
+        dataAccessObject.fetchRecords("SELECT * FROM users WHERE USER_NAME = 'user'");
     }
 
     @Test
-    public void createTable(){
-        final User user = new User();
+    public void createTable() {
         context.checking(new Expectations() {{
-            oneOf(dataAccessObject).createTable("users", user);
-            oneOf(dataAccessObject).getAllRecord("users");
-            will(returnValue(users));
+            oneOf(dataAccessObject).createTable("CREATE TABLE table(TUTORIALS POINT column1 INT, PRIMARY KEY (column1));");
         }});
-        dataAccessObject.createTable("users", user);
-        dataAccessObject.getAllRecord("users");
+        dataAccessObject.createTable("CREATE TABLE table(TUTORIALS POINT column1 INT, PRIMARY KEY (column1));");
     }
 
     @Test(expected = NoTableOrDroppedTableException.class)
-    public void deleteTable(){
+    public void deleteTable() {
         context.checking(new Expectations() {{
-            oneOf(dataAccessObject).deleteTable("users");
-            oneOf(dataAccessObject).getAllRecord("users");
-            will(throwException(new NoTableOrDroppedTableException("")));
+            oneOf(dataAccessObject).update("DROP TABLE name");
         }});
-        dataAccessObject.deleteTable("users");
-        dataAccessObject.getAllRecord("users");
+        dataAccessObject.update("DROP TABLE name");
     }
 }

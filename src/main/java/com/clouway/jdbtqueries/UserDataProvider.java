@@ -21,18 +21,13 @@ public class UserDataProvider implements DataAccessObject {
         this.records = records;
     }
 
-    public <T> List<T> getAllRecord(String table) throws NoConnectionException {
+    public <T> List<T> fetchRecords(String query) throws NoConnectionException {
         PreparedStatement statement = null;
         try {
-            statement = dbConnection.prepareStatement("SELECT * FROM " + table);
+            statement = dbConnection.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                User user = new User();
-                user.setId(resultSet.getInt(1));
-                user.setUserName(resultSet.getString(2));
-                user.setPassword(resultSet.getString(3));
-                user.setEmail(resultSet.getString(4));
-                records.add(user);
+               records.add(fillObject(resultSet));
             }
             dbConnection.close();
             return records;
@@ -41,7 +36,26 @@ public class UserDataProvider implements DataAccessObject {
         }
     }
 
-    public <T> User getRecord(String table, T iD) throws NoRecordFoundException, NoConnectionException {
+    private User fillObject(ResultSet resultSet) throws SQLException {
+        User user = new User();
+        user.setId(resultSet.getInt(1));
+        user.setUserName(resultSet.getString(2));
+        user.setPassword(resultSet.getString(3));
+        user.setEmail(resultSet.getString(4));
+        return user;
+    }
+
+    public void update(String query) {
+
+    }
+
+    public void createTable(String query) {
+
+    }
+
+
+
+    /*public <T> User getRecord(String table, T iD) throws NoRecordFoundException, NoConnectionException {
         PreparedStatement statement = null;
         try {
             int id = (Integer) iD;
@@ -61,22 +75,7 @@ public class UserDataProvider implements DataAccessObject {
             throw new NoRecordFoundException("No record found in Database");
         }
     }
-
-    public <T> void updateRecord(String table, T record, T updatedRecord) {
-
-    }
-
-    public <T> void deleteRecord(String table, T record) {
-
-    }
-
-    public <T> void createTable(String table, T record) {
-
-    }
-
-    public void deleteTable(String table) {
-
-    }
+*/
    /*
 
 
@@ -162,7 +161,7 @@ public class UserDataProvider implements DataAccessObject {
         }
     }
 
-    public <T> T getAllRecord(String query) {
+    public <T> T fetchRecords(String query) {
         return null;
     }
 

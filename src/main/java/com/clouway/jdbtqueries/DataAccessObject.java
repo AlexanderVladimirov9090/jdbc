@@ -1,6 +1,5 @@
 package com.clouway.jdbtqueries;
 
-import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -10,17 +9,11 @@ import java.util.List;
  *         <alexandervladimirov1902@gmail.com>
  */
 public interface DataAccessObject {
-    <T> List<T> getAllRecord(String table) throws NoRecordFoundException, NoConnectionException;
 
-    <T> User getRecord(String table, T record) throws NoRecordFoundException, NoConnectionException;
+    <T> List<T> fetchRecords(String query) throws NoRecordFoundException, NoConnectionException;
 
-    <T> void updateRecord(String table, T record, T updatedRecord);
+    void update(String query);
 
-    <T> void deleteRecord(String table, T record);
-
-    <T> void createTable(String table,T record);
-
-    void deleteTable(String table);
-
+    void createTable(String query);
 
 }
