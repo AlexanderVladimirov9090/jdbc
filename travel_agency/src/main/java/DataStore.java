@@ -1,10 +1,9 @@
-package com.clouway.jdbtqueries;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by clouway on 04.11.16.
@@ -12,7 +11,7 @@ import java.util.List;
  * @author Alexander Vladimirov
  *         <alexandervladimirov1902@gmail.com>
  */
-public  class DataStore<T> {
+public class DataStore<T> {
     private final List list;
     private final Connection dbConnection;
 
@@ -38,23 +37,15 @@ public  class DataStore<T> {
         try (PreparedStatement statement = dbConnection.prepareStatement(query)) {
             ResultSet resultSet = statement.executeQuery(query);
             while (resultSet.next()) {
-                T row = rowFetcher.fetchRow(resultSet);
-                list.add(row);
+                Optional<T> possibleRow = Optional.of(rowFetcher.fetchRow(resultSet));
+                list.add(possibleRow.get());
             }
         } catch (SQLException e) {
             throw new IllegalStateException("Connection to the database wasn't established");
         } finally {
             close(dbConnection);
         }
-        return checkConsistency(list);
-    }
-
-    private List<T> checkConsistency(List<T> list) {
-        if (!list.isEmpty()){
-            return list;
-        }else {
-            throw new NoRecordFoundException("No record was found in DB");
-        }
+        return list;
     }
 
     private void fillStatement(PreparedStatement statement, Object... objects) throws SQLException {

@@ -17,7 +17,7 @@ import static org.junit.Assert.assertThat;
  *         <alexandervladimirov1902@gmail.com>
  */
 public class UserDataFromDBTest {
-    private JDBCConnector jdbcConnector = new JDBCConnector("com.mysql.jdbc.Driver", "jdbc:mysql://localhost/jdbc_database", "root", "clouway.com");
+    private Connector jdbcConnector = new Connector("com.mysql.jdbc.Driver", "jdbc:mysql://localhost/jdbc_database", "root", "123123");
 
     @Test
     public void getFirstUserId() throws NoConnectionException {
@@ -79,7 +79,7 @@ public class UserDataFromDBTest {
         assertThat(actualUser.getEmail(), is(equalTo("emai@email.com")));
     }
 
-    @Test(expected = NoRecordFoundException.class)
+    @Test(expected = IndexOutOfBoundsException.class)
     public void getNonExistingUser(){
         DataStore userDataStore = new DataStore(new LinkedList(), jdbcConnector.getConnection());
         List actual = userDataStore.fetchRows("SELECT * FROM  users WHERE ID = 5", resultSet -> {
@@ -92,6 +92,5 @@ public class UserDataFromDBTest {
         });
         User actualUser = (User) actual.get(0);
         assertThat(actualUser.getEmail(), is(equalTo("emai@email.com")));
-
     }
 }

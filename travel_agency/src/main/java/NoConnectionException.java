@@ -1,5 +1,3 @@
-package com.clouway.jdbtqueries;
-
 /**
  * Created by clouway on 26.10.16.
  *

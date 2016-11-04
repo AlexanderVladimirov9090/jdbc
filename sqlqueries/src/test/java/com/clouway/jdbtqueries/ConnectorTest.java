@@ -14,34 +14,34 @@ import static org.junit.Assert.assertThat;
  * @author Alexander Vladimirov
  *         <alexandervladimirov1902@gmail.com>
  */
-public class JDBCConnectorTest {
+public class ConnectorTest {
 
     @Test
     public void getConnector() throws NoConnectionException {
-        Connector jdbcConnector = new Connector("com.mysql.jdbc.Driver", "jdbc:mysql://localhost/jdbc_database", "root", "clouway.com");
-        assertThat(jdbcConnector.getConnection(), is(instanceOf(Connection.class)));
+        Connector connector = new Connector("com.mysql.jdbc.Driver", "jdbc:mysql://localhost/jdbc_database", "root", "123123");
+        assertThat(connector.getConnection(), is(instanceOf(Connection.class)));
     }
 
     @Test(expected = NoConnectionException.class)
     public void noDriver() throws NoConnectionException {
-        Connector jdbcConnector = new Connector("", "jdbc:mysql://localhost/jdbc_database", "root", "clouway.com");
-        jdbcConnector.getConnection();
+        Connector connector = new Connector("", "jdbc:mysql://localhost/jdbc_database", "root", "clouway.com");
+        connector.getConnection();
     }
 
     @Test(expected = NoConnectionException.class)
     public void noURL() throws NoConnectionException {
-        Connector jdbcConnector = new Connector("com.mysql.jdbc.Driver", "", "root", "clouway.com");
-        jdbcConnector.getConnection();
+        Connector connector = new Connector("com.mysql.jdbc.Driver", "", "root", "clouway.com");
+        connector.getConnection();
     }
 
     @Test(expected = NoConnectionException.class)
     public void noUser() throws NoConnectionException {
-        Connector jdbcConnector = new Connector("com.mysql.jdbc.Driver", "jdbc:mysql://localhost/jdbc_database", "", "clouway.com");
-        jdbcConnector.getConnection();
+        Connector connector = new Connector("com.mysql.jdbc.Driver", "jdbc:mysql://localhost/jdbc_database", "", "clouway.com");
+        connector.getConnection();
     }
     @Test(expected = NoConnectionException.class)
     public void noPassword() throws NoConnectionException {
-        Connector jdbcConnector = new Connector("com.mysql.jdbc.Driver", "jdbc:mysql://localhost/jdbc_database", "root", "");
-        jdbcConnector.getConnection();
+        Connector connector = new Connector("com.mysql.jdbc.Driver", "jdbc:mysql://localhost/jdbc_database", "root", "");
+        connector.getConnection();
     }
 }

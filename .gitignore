@@ -30,3 +30,7 @@ hs_err_pid*
 
 /gradlew.bat
 
+/travel_agency/gradlew.bat
+/travel_agency/gradlew
+/travel_agency/.gradle/
+/travel_agency/gradle/

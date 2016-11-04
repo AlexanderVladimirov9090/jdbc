@@ -10,13 +10,13 @@ import java.sql.SQLException;
  * @author Alexander Vladimirov
  *         <alexandervladimirov1902@gmail.com>
  */
-public class JDBCConnector {
+public class Connector {
     private final String JDBC_DRIVER;
     private final String DB_URL;
     private final String USER;
     private final String PASSWORD;
 
-    public JDBCConnector(String jDBCDriver, String databaseURL, String user, String password) {
+    public Connector(String jDBCDriver, String databaseURL, String user, String password) {
         this.JDBC_DRIVER = jDBCDriver;
         this.DB_URL = databaseURL;
         this.USER = user;
