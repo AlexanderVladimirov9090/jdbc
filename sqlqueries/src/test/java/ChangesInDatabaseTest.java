@@ -1,5 +1,6 @@
-package com.clouway.jdbtqueries;
-
+import com.clouway.jdbtqueries.Connector;
+import com.clouway.jdbtqueries.DataStore;
+import com.clouway.jdbtqueries.User;
 import org.junit.Test;
 
 import java.sql.SQLException;
@@ -39,6 +40,8 @@ public class ChangesInDatabaseTest {
         User actualUser = (User) actualUsers.get(0);
         assertTrue(actualUser.equal(expected));
     }
+
+
 
     @Test
     public void deleteRecord() {

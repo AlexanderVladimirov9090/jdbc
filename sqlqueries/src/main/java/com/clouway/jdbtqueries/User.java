@@ -1,14 +1,14 @@
 package com.clouway.jdbtqueries;
-import java.io.Serializable;
 
-import static org.hamcrest.CoreMatchers.equalTo;
+import java.util.Objects;
+
 /**
  * Created by clouway on 02.11.16.
  *
  * @author Alexander Vladimirov
  *         <alexandervladimirov1902@gmail.com>
  */
-public class User implements Serializable {
+public class User {
     private int iD;
     private String userName;
     private String password;
@@ -20,23 +20,7 @@ public class User implements Serializable {
         this.password = password;
         this.email = email;
     }
-/*
-    public void setId(int iD) {
-        this.iD = iD;
-    }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-*/
     public int getId() {
         return this.iD;
     }
@@ -53,4 +37,10 @@ public class User implements Serializable {
         return email;
     }
 
+    public boolean equal(User user){
+        return this.iD == user.getId() &&
+                Objects.equals(this.userName, user.userName) &&
+                Objects.equals(this.password,user.password) &&
+                Objects.equals(this.email , user.email);
+    }
 }

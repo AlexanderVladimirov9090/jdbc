@@ -1,5 +1,5 @@
-package com.clouway.jdbtqueries;
-
+import com.clouway.jdbtqueries.Connector;
+import com.clouway.jdbtqueries.NoConnectionException;
 import org.junit.Test;
 
 import java.sql.Connection;

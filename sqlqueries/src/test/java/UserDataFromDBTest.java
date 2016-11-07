@@ -1,5 +1,7 @@
-package com.clouway.jdbtqueries;
-
+import com.clouway.jdbtqueries.Connector;
+import com.clouway.jdbtqueries.DataStore;
+import com.clouway.jdbtqueries.NoConnectionException;
+import com.clouway.jdbtqueries.User;
 import org.junit.Test;
 
 import java.sql.SQLException;
