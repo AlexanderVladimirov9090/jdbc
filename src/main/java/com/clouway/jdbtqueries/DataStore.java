@@ -53,7 +53,7 @@ public  class DataStore<T> {
         if (!list.isEmpty()){
             return list;
         }else {
-            throw new NoRecordFoundException("No record was found in DB");
+            throw new NoRecordFoundException("No record was found in Database.");
         }
     }
 
