@@ -12,7 +12,7 @@ import java.util.List;
  * @author Alexander Vladimirov
  *         <alexandervladimirov1902@gmail.com>
  */
-public  class DataStore<T> {
+public class DataStore<T> {
     private final List list;
     private final Connection dbConnection;
 
@@ -50,10 +50,10 @@ public  class DataStore<T> {
     }
 
     private List<T> checkConsistency(List<T> list) {
-        if (!list.isEmpty()){
+        if (!list.isEmpty()) {
             return list;
-        }else {
-            throw new NoRecordFoundException("No record was found in Database.");
+        } else {
+            throw new IllegalStateException("No record was found by that criteria.");
         }
     }
 
@@ -68,7 +68,7 @@ public  class DataStore<T> {
             try {
                 connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                throw new IllegalStateException("Connection to the database wasn't established");
             }
         }
     }

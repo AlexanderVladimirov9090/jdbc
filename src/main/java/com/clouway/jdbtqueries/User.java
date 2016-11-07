@@ -1,5 +1,7 @@
 package com.clouway.jdbtqueries;
-import static org.hamcrest.CoreMatchers.equalTo;
+
+import java.util.Objects;
+
 /**
  * Created by clouway on 02.11.16.
  *
@@ -18,23 +20,7 @@ public class User {
         this.password = password;
         this.email = email;
     }
-/*
-    public void setId(int iD) {
-        this.iD = iD;
-    }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-*/
     public int getId() {
         return this.iD;
     }
@@ -51,4 +37,10 @@ public class User {
         return email;
     }
 
+    public boolean equal(User user){
+        return this.iD == user.getId() &&
+                Objects.equals(this.userName, user.userName) &&
+                Objects.equals(this.password,user.password) &&
+                Objects.equals(this.email , user.email);
+    }
 }

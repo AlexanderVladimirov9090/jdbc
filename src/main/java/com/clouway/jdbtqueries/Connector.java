@@ -10,14 +10,14 @@ import java.sql.SQLException;
  * @author Alexander Vladimirov
  *         <alexandervladimirov1902@gmail.com>
  */
-public class JDBCConnector {
-    private final String JDBC_DRIVER;
+public class Connector {
+    private final String DRIVER;
     private final String DB_URL;
     private final String USER;
     private final String PASSWORD;
 
-    public JDBCConnector(String jDBCDriver, String databaseURL, String user, String password) {
-        this.JDBC_DRIVER = jDBCDriver;
+    public Connector(String jDBCDriver, String databaseURL, String user, String password) {
+        this.DRIVER = jDBCDriver;
         this.DB_URL = databaseURL;
         this.USER = user;
         this.PASSWORD = password;
@@ -25,7 +25,7 @@ public class JDBCConnector {
 
     public Connection getConnection() throws NoConnectionException {
         try {
-            Class.forName(JDBC_DRIVER);
+            Class.forName(DRIVER);
             isUserProvided();
             isPasswordProvided();
             Connection connection = DriverManager.getConnection(DB_URL, USER, PASSWORD);
