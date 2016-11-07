@@ -1,10 +1,9 @@
-package com.clouway.jdbtqueries;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by clouway on 04.11.16.
@@ -27,7 +26,6 @@ public class DataStore<T> {
             fillStatement(statement, objects);
             statement.execute();
         } catch (SQLException e) {
-
             throw new IllegalStateException("Connection to the database wasn't established");
         } finally {
             close(dbConnection);
@@ -39,14 +37,15 @@ public class DataStore<T> {
         try (PreparedStatement statement = dbConnection.prepareStatement(query)) {
             ResultSet resultSet = statement.executeQuery(query);
             while (resultSet.next()) {
-                T row = rowFetcher.fetchRow(resultSet);
-                list.add(row);
+                Optional<T> possibleRow = Optional.of(rowFetcher.fetchRow(resultSet));
+                list.add(possibleRow.get());
             }
         } catch (SQLException e) {
             throw new IllegalStateException("Connection to the database wasn't established");
         } finally {
             close(dbConnection);
         }
+<<<<<<< HEAD:src/main/java/com/clouway/jdbtqueries/DataStore.java
         return checkConsistency(list);
     }
 
@@ -56,6 +55,9 @@ public class DataStore<T> {
         } else {
             throw new IllegalStateException("No record was found by that criteria.");
         }
+=======
+        return list;
+>>>>>>> 8e00e3887f385bbf91711b7cbddc39d7d0371f88:travel_agency/src/main/java/DataStore.java
     }
 
     private void fillStatement(PreparedStatement statement, Object... objects) throws SQLException {
