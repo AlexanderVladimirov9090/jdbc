@@ -16,4 +16,7 @@ hs_err_pid*
 /sqlqueries/.gradle/
 /sqlqueries/gradlew
 /sqlqueries/build/
->>>>>>> a5e6ca329909b907c085ea867c5f9015f12f5a09
+/tavel_agency/gradlew
+/tavel_agency/.gradle/
+/tavel_agency/gradlew.bat
+/tavel_agency/gradle/
