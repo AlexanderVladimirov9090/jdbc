@@ -18,12 +18,11 @@ public class PersonDaoImp implements PersonDao {
     }
 
     @Override
-    public List<Person> getPersons() {
+    public List<Person> getPeople() {
         List persons = dataStore.fetchRows("SELECT * FROM  People", resultSet -> {
             try {
                 return new Person(resultSet.getString(2), resultSet.getInt(3), resultSet.getLong(1));
-            } catch (SQLException e) {
-                e.printStackTrace();
+            } catch (SQLException ignore) {
             }
             return null;
         });
@@ -31,15 +30,12 @@ public class PersonDaoImp implements PersonDao {
     }
 
     @Override
-    public List<Person> personsStartsWith(String startsWith) {
-        if (startsWith.contains(";")) {
-            throw new IllegalCharactersException("No sql injection");
-        }
+    public List<Person> peopleStartsWith(String startsWith) {
+
         List persons = dataStore.fetchRows("SELECT * FROM  People WHERE Name LIKE '" + startsWith + "%'", resultSet -> {
             try {
                 return new Person(resultSet.getString(2), resultSet.getInt(3), resultSet.getLong(1));
-            } catch (SQLException e) {
-                e.printStackTrace();
+            } catch (SQLException ignore) {
             }
             return null;
         });
@@ -47,12 +43,19 @@ public class PersonDaoImp implements PersonDao {
     }
 
     @Override
-    public List<Person> personsByWhereSameCity(String city) {
-        return null;
+    public List<Person> peopleInSameCity(String city) {
+        List persons = dataStore.fetchRows("SELECT * FROM  People WHERE SELECT ID FROM Trip LIKE  '" + startsWith + "%'", resultSet -> {
+            try {
+                return new Person(resultSet.getString(2), resultSet.getInt(3), resultSet.getLong(1));
+            } catch (SQLException ignore) {
+            }
+            return null;
+        });
+        return persons;
     }
 
     @Override
-    public void addPerosn(Person person) {
+    public void addPerson(Person person) {
 
     }
 }

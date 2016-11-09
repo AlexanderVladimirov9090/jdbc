@@ -24,29 +24,30 @@ public class SelectPersonTest {
         Class.forName("com.mysql.jdbc.Driver");
         Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/jdbc_database", "root", "clouway.com");
         PersonDao personDao = new PersonDaoImp(connection);
-        List actual = personDao.getPersons();
+        List actual = personDao.getPeople();
         Person actualPerson = (Person) actual.get(0);
         assertThat(actualPerson.equal(expected), is(true));
     }
 
     @Test
-    public void getByStartsWith() throws ClassNotFoundException, SQLException {
+    public void peopleStartsWith() throws ClassNotFoundException, SQLException {
         Person expected = new Person("Petur", 76, 1212121212L);
         Class.forName("com.mysql.jdbc.Driver");
         Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/jdbc_database", "root", "clouway.com");
         PersonDao personDao = new PersonDaoImp(connection);
-        List actual = personDao.personsStartsWith("P");
+        List actual = personDao.peopleStartsWith("P");
         Person actualPerson = (Person) actual.get(0);
         assertThat(actualPerson.equal(expected), is(true));
-
     }
 
-    @Test(expected = IllegalCharactersException.class)
-    public void SQLInjection() throws ClassNotFoundException, SQLException {
+
+    @Test(expected = IllegalStateException.class)
+    public void sQLInjection() throws ClassNotFoundException, SQLException {
         Person expected = new Person("Petur", 76, 1212121212L);
         Class.forName("com.mysql.jdbc.Driver");
         Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/jdbc_database", "root", "clouway.com");
         PersonDao personDao = new PersonDaoImp(connection);
-        List actual = personDao.personsStartsWith("'; DROP TABLE post_comment; -- '");
+        List actual = personDao.peopleStartsWith("'; DROP TABLE post_comment; -- '");
     }
+
 }

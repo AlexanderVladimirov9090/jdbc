@@ -9,11 +9,11 @@ import java.util.List;
  *         <alexandervladimirov1902@gmail.com>
  */
 public interface PersonDao {
-    List<Person> getPersons();
+    List<Person> getPeople();
 
-    List<Person> personsStartsWith(String startsWith);
+    List<Person> peopleStartsWith(String startsWith);
 
-    List<Person> personsByWhereSameCity(String city);
+    List<Person> peopleInSameCity(String city);
 
-    void addPerosn(Person person);
+    void addPerson(Person person);
 }
