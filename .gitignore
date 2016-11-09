@@ -15,3 +15,5 @@ hs_err_pid*
 /sqlqueries/gradlew.bat
 /sqlqueries/.gradle/
 /sqlqueries/gradlew
+/sqlqueries/build/
+>>>>>>> a5e6ca329909b907c085ea867c5f9015f12f5a09

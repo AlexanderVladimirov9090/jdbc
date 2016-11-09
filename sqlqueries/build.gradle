@@ -11,4 +11,9 @@ repositories {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
+<<<<<<< HEAD
+=======
+    compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.6'
+    compile 'com.google.guava:guava:20.0'
+>>>>>>> a5e6ca329909b907c085ea867c5f9015f12f5a09
 }
