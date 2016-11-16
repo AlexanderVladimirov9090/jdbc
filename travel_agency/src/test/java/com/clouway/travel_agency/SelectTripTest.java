@@ -50,9 +50,15 @@ public class SelectTripTest {
 
     @Test
     public void happyPath() {
-        Trip expected = new Trip(9292929292L, new Date(1290262492000L), new Date(1290694492000L), "Sofia");
+        Trip expectedFirst = new Trip(9292929292L, new Date(1290262492000L), new Date(1290694492000L), "Sofia");
+        Trip expectedSecond = new Trip(9090909090L, new Date(1290262492000L), new Date(1290694492000L), "Pleven");
+        Trip expectedThird = new Trip(9090909090L, new Date(1290262492000L), new Date(1290694492000L), "Sofia");
         List trips = tripRepo.getAll();
         Trip actual = (Trip) trips.get(0);
-        assertThat(actual.equal(expected), is(true));
+        Trip actualSecond = (Trip) trips.get(1);
+        Trip actualThird = (Trip)  trips.get(2);
+        assertThat(actual.equal(expectedFirst), is(true));
+        assertThat(actualSecond.equal(expectedSecond),is(true));
+        assertThat(actualThird.equal(expectedThird),is(true));
     }
 }

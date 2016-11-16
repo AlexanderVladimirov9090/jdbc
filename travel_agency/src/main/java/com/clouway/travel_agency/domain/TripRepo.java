@@ -19,13 +19,6 @@ public interface TripRepo {
     List<Trip> getAll();
 
     /**
-     * Gets sorted trips by number of people in cities.
-     *
-     * @return list of sorted trips.
-     */
-    List<Trip> sortByPeopleInCity();
-
-    /**
      * Adds trip to Database.
      *
      * @param trip that is added.

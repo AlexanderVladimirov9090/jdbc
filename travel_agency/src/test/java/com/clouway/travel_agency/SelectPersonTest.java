@@ -44,6 +44,7 @@ public class SelectPersonTest {
         tripRepo.register(new Trip(9090909090L,new Date(1290262492000L),new Date(1290694492000L), "Pleven"));
         tripRepo.register(new Trip(9191919191L,new Date(1290262492000L),new Date(1290694492000L), "Pleven"));
     }
+
     @Test
     public void happyPath() throws ClassNotFoundException, SQLException {
         Person expected = new Person("Gosho", 9090909090L, 23, "email@email.com");
@@ -65,7 +66,7 @@ public class SelectPersonTest {
 
 
     @Test
-    public void byCity() {
+    public void bySameCity() {
         Person expectedFirst = new Person("Gosho", 9090909090L, 23,"email@email.com" );
         Person expectedSecond = new Person("Pesho", 9191919191L, 27, "gemail@gemail.com");
         List actual = personRepo.peopleInSameCity("Pleven","2010-12-12");

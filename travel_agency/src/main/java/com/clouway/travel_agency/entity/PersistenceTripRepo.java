@@ -4,15 +4,18 @@ import com.clouway.travel_agency.domain.Trip;
 import com.clouway.travel_agency.domain.TripRepo;
 import com.google.common.collect.Lists;
 
-import java.sql.*;
-import java.util.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
 
 /**
  * Created by zumba on 15.11.16.
  *
  * @author Alexander Vladimirov
  *         <alexandervladimirov1902@gmail.com>
- *   This is concreate implementation of TripRepo.
+ *         This is concreate implementation of TripRepo.
  */
 public class PersistenceTripRepo implements TripRepo {
     private final Connection connection;
@@ -41,15 +44,7 @@ public class PersistenceTripRepo implements TripRepo {
         }
         return list;
     }
-    /**
-     * Gets sorted trips by number of people in cities.
-     *
-     * @return list of sorted trips.
-     */
-    @Override
-    public List<Trip> sortByPeopleInCity() {
-        return null;
-    }
+
 
     /**
      * Adds trip to Database.
@@ -67,7 +62,6 @@ public class PersistenceTripRepo implements TripRepo {
             statement.execute();
 
         } catch (SQLException e) {
-            e.printStackTrace();
             throw new IllegalStateException("Connection to the database wasn't established");
         }
     }
@@ -79,10 +73,10 @@ public class PersistenceTripRepo implements TripRepo {
      */
     @Override
     public void updateTrip(Trip trip) {
-        try (PreparedStatement statement = connection.prepareStatement("UPDATE Trip SET  DateOfArrival= ?, DateOfDeparture = ?, Email = ? WHERE EGN = ?")) {
+        try (PreparedStatement statement = connection.prepareStatement("UPDATE Trip SET  DateOfArrival= ?, DateOfDeparture = ?, City = ? WHERE EGN = ?")) {
             statement.setDate(1, trip.getDateOfArrival());
             statement.setDate(2, trip.getDateOfDeparture());
-            statement.setString(3,trip.getCity().getName());
+            statement.setString(3, trip.getCity().getName());
             statement.setLong(4, trip.getEgn());
             statement.execute();
         } catch (SQLException e) {
@@ -97,8 +91,8 @@ public class PersistenceTripRepo implements TripRepo {
      */
     @Override
     public void deleteTripByEGN(Long egn) {
-        try(PreparedStatement statement = connection.prepareStatement("DELETE FROM Trip WHERE EGN = ?")) {
-            statement.setLong(1,egn);
+        try (PreparedStatement statement = connection.prepareStatement("DELETE FROM Trip WHERE EGN = ?")) {
+            statement.setLong(1, egn);
             statement.execute();
         } catch (SQLException e) {
             throw new IllegalStateException("Connection to the database wasn't established");
@@ -110,7 +104,7 @@ public class PersistenceTripRepo implements TripRepo {
      */
     @Override
     public void createTable() {
-        try(PreparedStatement statement = connection.prepareStatement("CREATE TABLE Trip " +
+        try (PreparedStatement statement = connection.prepareStatement("CREATE TABLE Trip " +
                 "( EGN BIGINT NOT NULL," +
                 "DateOfArrival DATE NOT NULL," +
                 "DateOfDeparture DATE NOT NULL," +
@@ -128,7 +122,7 @@ public class PersistenceTripRepo implements TripRepo {
      */
     @Override
     public void deleteTable() {
-        try(PreparedStatement statement = connection.prepareStatement("DROP TABLE IF EXISTS Trip")) {
+        try (PreparedStatement statement = connection.prepareStatement("DROP TABLE IF EXISTS Trip")) {
             statement.execute();
         } catch (SQLException e) {
             e.printStackTrace();

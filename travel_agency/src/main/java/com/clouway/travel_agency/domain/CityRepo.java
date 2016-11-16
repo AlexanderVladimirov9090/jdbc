@@ -7,10 +7,20 @@ import java.util.List;
  *
  * @author Alexander Vladimirov
  *         <alexandervladimirov1902@gmail.com>
+ *             This interface is used to get records from Database.
  */
-public interface CityRepo {
+public interface  CityRepo {
 
+   /**
+    * Gets all cities whit duplicates.
+    * @return list of cities.
+    */
    List<City> getAll();
-   List<City> sortByMoustVisited();
+
+   /**
+    * Return sorted by ascending order list of cities.
+    * @return sorted list of cities.
+    */
+   List<City> sortByAscending();
 
 }

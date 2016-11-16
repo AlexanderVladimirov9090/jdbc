@@ -40,6 +40,11 @@ public class Person implements Serializable {
         return email;
     }
 
+    /**
+     * Custom matcher for objects from class Person.
+     * @param person compare to.
+     * @return true if two object are equal to all its fields.
+     */
     public boolean equal(Person person) {
         return Objects.equals(this.egn, person.egn) &&
                 Objects.equals(this.name, person.name) &&

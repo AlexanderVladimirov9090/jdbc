@@ -40,7 +40,11 @@ public class Trip {
     public City getCity() {
         return city;
     }
-
+    /**
+     * Custom matcher for objects from class Trip.
+     * @param trip compare to.
+     * @return true if two object are equal to all its fields.
+     */
     public boolean equal(Trip trip) {
         return Objects.equals(this.egn, trip.egn) &&
                 Objects.equals(this.dateOfArrival.toString(), trip.dateOfArrival.toString())&&
