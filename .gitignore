@@ -16,3 +16,8 @@ hs_err_pid*
 /sqlqueries/gradlew.bat
 /sqlqueries/.gradle/
 /sqlqueries/gradlew
+/travel_agency/gradlew.bat
+/travel_agency/gradlew
+/travel_agency/.gradle/
+/travel_agency/gradle/
+/travel_agency/build/
