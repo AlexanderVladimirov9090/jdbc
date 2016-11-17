@@ -14,9 +14,9 @@ import java.util.List;
  *         <alexandervladimirov1902@gmail.com>
  */
 public class PersistencePersonRepo implements PersonRepo {
-
     private final Connection connection;
     private final DataStore dataStore;
+
     public PersistencePersonRepo(Connection connection) {
         this.connection = connection;
         this.dataStore = new DataStore(connection);
@@ -88,7 +88,7 @@ public class PersistencePersonRepo implements PersonRepo {
      */
     @Override
     public void register(Person person) {
-       dataStore.update("INSERT INTO People VALUES (?,?,?,?)",person.getName(),person.getEgn(),person.getAge(),person.getEmail());
+        dataStore.update("INSERT INTO People VALUES (?,?,?,?)", person.getName(), person.getEgn(), person.getAge(), person.getEmail());
     }
 
     /**
@@ -98,7 +98,7 @@ public class PersistencePersonRepo implements PersonRepo {
      */
     @Override
     public void updatePerson(Person person) {
-        dataStore.update("UPDATE People SET Name = ?, AGE = ?, Email = ? WHERE EGN = ?",person.getName(),person.getAge(),person.getEmail(),person.getEgn());
+        dataStore.update("UPDATE People SET Name = ?, AGE = ?, Email = ? WHERE EGN = ?", person.getName(), person.getAge(), person.getEmail(), person.getEgn());
     }
 
     /**
@@ -108,7 +108,7 @@ public class PersistencePersonRepo implements PersonRepo {
      */
     @Override
     public void deletePersonByEGN(Long egn) {
-       dataStore.update("DELETE FROM People WHERE EGN = ?", egn);
+        dataStore.update("DELETE FROM People WHERE EGN = ?", egn);
     }
 
     /**

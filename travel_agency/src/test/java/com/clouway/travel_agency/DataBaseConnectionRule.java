@@ -15,7 +15,7 @@ import java.sql.SQLException;
  *         <alexandervladimirov1902@gmail.com>
  */
 public class DataBaseConnectionRule implements TestRule {
-    public   Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/jdbc_database", "root", "123123");;
+    public   Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/jdbc_database", "root", "clouway.com");
 
     public DataBaseConnectionRule() throws SQLException {
     }

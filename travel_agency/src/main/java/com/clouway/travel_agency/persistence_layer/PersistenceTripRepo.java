@@ -2,12 +2,8 @@ package com.clouway.travel_agency.persistence_layer;
 
 import com.clouway.travel_agency.domain_layer.Trip;
 import com.clouway.travel_agency.domain_layer.TripRepo;
-import com.google.common.collect.Lists;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -18,10 +14,9 @@ import java.util.List;
  *         This is concreate implementation of TripRepo.
  */
 public class PersistenceTripRepo implements TripRepo {
-    private final Connection connection;
     private final DataStore dataStore;
+
     public PersistenceTripRepo(Connection connection) {
-        this.connection = connection;
         this.dataStore = new DataStore(connection);
     }
 
@@ -32,8 +27,8 @@ public class PersistenceTripRepo implements TripRepo {
      */
     @Override
     public List<Trip> getAll() {
-       return dataStore.fetchRows("SELECT * FROM Trip", resultSet -> new Trip(resultSet.getLong(1), resultSet.getDate(2), resultSet.getDate(3), resultSet.getString(4)));
-      }
+        return dataStore.fetchRows("SELECT * FROM Trip", resultSet -> new Trip(resultSet.getLong(1), resultSet.getDate(2), resultSet.getDate(3), resultSet.getString(4)));
+    }
 
 
     /**
@@ -43,7 +38,7 @@ public class PersistenceTripRepo implements TripRepo {
      */
     @Override
     public void register(Trip trip) {
-       dataStore.update("INSERT INTO Trip VALUES (?,?,?,?)",trip.getEgn(),trip.getDateOfArrival(),trip.getDateOfDeparture(),trip.getCity().getName());
+        dataStore.update("INSERT INTO Trip VALUES (?,?,?,?)", trip.getEgn(), trip.getDateOfArrival(), trip.getDateOfDeparture(), trip.getCity().getName());
     }
 
     /**
@@ -53,7 +48,7 @@ public class PersistenceTripRepo implements TripRepo {
      */
     @Override
     public void updateTrip(Trip trip) {
-       dataStore.update("UPDATE Trip SET  DateOfArrival= ?, DateOfDeparture = ?, City = ? WHERE EGN = ?",trip.getDateOfArrival(),trip.getDateOfDeparture(),trip.getCity().getName(),trip.getEgn());
+        dataStore.update("UPDATE Trip SET  DateOfArrival= ?, DateOfDeparture = ?, City = ? WHERE EGN = ?", trip.getDateOfArrival(), trip.getDateOfDeparture(), trip.getCity().getName(), trip.getEgn());
     }
 
     /**
@@ -63,7 +58,7 @@ public class PersistenceTripRepo implements TripRepo {
      */
     @Override
     public void deleteTripByEGN(Long egn) {
-        dataStore.update("DELETE FROM Trip WHERE EGN = ?",egn);
+        dataStore.update("DELETE FROM Trip WHERE EGN = ?", egn);
     }
 
     /**
@@ -71,7 +66,7 @@ public class PersistenceTripRepo implements TripRepo {
      */
     @Override
     public void createTable() {
-       dataStore.update("CREATE TABLE Trip ( EGN BIGINT NOT NULL, DateOfArrival DATE NOT NULL, DateOfDeparture DATE NOT NULL, City VARCHAR(56), FOREIGN KEY (EGN) REFERENCES People(EGN))");
+        dataStore.update("CREATE TABLE Trip ( EGN BIGINT NOT NULL, DateOfArrival DATE NOT NULL, DateOfDeparture DATE NOT NULL, City VARCHAR(56), FOREIGN KEY (EGN) REFERENCES People(EGN))");
     }
 
     /**
