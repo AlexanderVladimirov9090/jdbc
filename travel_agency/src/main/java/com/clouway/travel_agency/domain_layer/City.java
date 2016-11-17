@@ -1,4 +1,4 @@
-package com.clouway.travel_agency.domain;
+package com.clouway.travel_agency.domain_layer;
 
 /**
  * Created by zumba on 15.11.16.
@@ -10,6 +10,7 @@ package com.clouway.travel_agency.domain;
 public class City {
     private final String name;
     private Integer visits;
+
     public City(String name) {
         this.name = name;
 
@@ -23,9 +24,18 @@ public class City {
         this.visits=visits;
     }
 
+    /**
+     * Gets name of the city.
+      * @return name of city.
+     */
     public String getName() {
         return name;
     }
+
+    /**
+     * Gets number of visits.
+     * @return number of visits.
+     */
     public Integer getVisits(){
         return visits;
     }

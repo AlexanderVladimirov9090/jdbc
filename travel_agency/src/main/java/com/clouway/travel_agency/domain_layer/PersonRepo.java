@@ -1,4 +1,4 @@
-package com.clouway.travel_agency.domain;
+package com.clouway.travel_agency.domain_layer;
 
 import java.util.List;
 
@@ -33,7 +33,7 @@ public interface PersonRepo {
      * @param date Arrived date of person.
      * @return people that are in the same city.
      */
-    List<Person> peopleInSameCity(String city, String date);
+    List<Person> peopleInSameCity(String city, Long date);
 
     /**
      * Adds person to Database.

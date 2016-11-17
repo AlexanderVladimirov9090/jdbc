@@ -1,4 +1,4 @@
-package com.clouway.travel_agency.domain;
+package com.clouway.travel_agency.domain_layer;
 
 import java.util.List;
 

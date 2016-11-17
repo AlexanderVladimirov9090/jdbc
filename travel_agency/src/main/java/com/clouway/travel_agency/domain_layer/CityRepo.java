@@ -1,4 +1,4 @@
-package com.clouway.travel_agency.domain;
+package com.clouway.travel_agency.domain_layer;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ public interface  CityRepo {
     * Gets all cities whit duplicates.
     * @return list of cities.
     */
-   List<City> getAll();
+   List getAll();
 
    /**
     * Return sorted by ascending order list of cities.

@@ -1,9 +1,9 @@
 package com.clouway.travel_agency;
 
-import com.clouway.travel_agency.domain.*;
-import com.clouway.travel_agency.entity.PersistenceCityRepo;
-import com.clouway.travel_agency.entity.PersistencePersonRepo;
-import com.clouway.travel_agency.entity.PersistenceTripRepo;
+import com.clouway.travel_agency.domain_layer.*;
+import com.clouway.travel_agency.persistence_layer.PersistenceCityRepo;
+import com.clouway.travel_agency.persistence_layer.PersistencePersonRepo;
+import com.clouway.travel_agency.persistence_layer.PersistenceTripRepo;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -52,14 +52,14 @@ public class SelectCityTest {
     @Test
     public void getAll() {
         City expectedFirst = new City("Pleven");
-        City expectedThird = new City("Sofia");
+        City expectedSecond = new City("Sofia");
         List<City> cities = cityRepo.getAll();
         City actualFirst = cities.get(0);
         City actualSecond = cities.get(1);
         City actualThird = cities.get(2);
         assertThat(actualFirst.getName(), is(equalTo(expectedFirst.getName())));
-        assertThat(actualSecond.getName(), is(equalTo(expectedFirst.getName())));
-        assertThat(actualThird.getName(), is(equalTo(expectedThird.getName())));
+        assertThat(actualSecond.getName(), is(equalTo(expectedSecond.getName())));
+        assertThat(actualThird.getName(), is(equalTo(expectedFirst.getName())));
     }
 
     @Test

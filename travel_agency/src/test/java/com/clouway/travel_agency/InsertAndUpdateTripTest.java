@@ -1,11 +1,11 @@
 package com.clouway.travel_agency;
 
-import com.clouway.travel_agency.domain.Person;
-import com.clouway.travel_agency.domain.PersonRepo;
-import com.clouway.travel_agency.domain.Trip;
-import com.clouway.travel_agency.domain.TripRepo;
-import com.clouway.travel_agency.entity.PersistencePersonRepo;
-import com.clouway.travel_agency.entity.PersistenceTripRepo;
+import com.clouway.travel_agency.domain_layer.Person;
+import com.clouway.travel_agency.domain_layer.PersonRepo;
+import com.clouway.travel_agency.domain_layer.Trip;
+import com.clouway.travel_agency.domain_layer.TripRepo;
+import com.clouway.travel_agency.persistence_layer.PersistencePersonRepo;
+import com.clouway.travel_agency.persistence_layer.PersistenceTripRepo;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -65,6 +65,13 @@ public class InsertAndUpdateTripTest {
         List<Trip> trips = tripRepo.getAll();
         Trip actual = trips.get(2);
         assertThat(actual.equal(expected),is(true));
+    }
+
+    @Test
+    public void deleteTrip(){
+        tripRepo.deleteTripByEGN(9191919191L);
+        List<Trip> trips = tripRepo.getAll();
+        assertThat(trips.size(),is(equalTo(1)));
     }
 
 }

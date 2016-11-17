@@ -1,4 +1,4 @@
-package com.clouway.travel_agency.domain;
+package com.clouway.travel_agency.domain_layer;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -24,18 +24,34 @@ public class Person implements Serializable {
         this.email = email;
     }
 
+    /**
+     * Gets name of the person.
+     * @return name.
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Gets age of person.
+     * @return age.
+     */
     public int getAge() {
         return age;
     }
 
+    /**
+     * Gets egn of person.
+     * @return egn.
+     */
     public Long getEgn() {
         return egn;
     }
 
+    /**
+     * Gets e-mail of person.
+     * @return e-mail.
+     */
     public String getEmail() {
         return email;
     }

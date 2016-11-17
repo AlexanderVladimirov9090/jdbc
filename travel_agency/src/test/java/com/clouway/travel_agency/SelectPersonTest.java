@@ -1,11 +1,11 @@
 package com.clouway.travel_agency;
 
-import com.clouway.travel_agency.domain.Person;
-import com.clouway.travel_agency.domain.PersonRepo;
-import com.clouway.travel_agency.domain.Trip;
-import com.clouway.travel_agency.domain.TripRepo;
-import com.clouway.travel_agency.entity.PersistencePersonRepo;
-import com.clouway.travel_agency.entity.PersistenceTripRepo;
+import com.clouway.travel_agency.domain_layer.Person;
+import com.clouway.travel_agency.domain_layer.PersonRepo;
+import com.clouway.travel_agency.domain_layer.Trip;
+import com.clouway.travel_agency.domain_layer.TripRepo;
+import com.clouway.travel_agency.persistence_layer.PersistencePersonRepo;
+import com.clouway.travel_agency.persistence_layer.PersistenceTripRepo;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -69,7 +69,7 @@ public class SelectPersonTest {
     public void bySameCity() {
         Person expectedFirst = new Person("Gosho", 9090909090L, 23,"email@email.com" );
         Person expectedSecond = new Person("Pesho", 9191919191L, 27, "gemail@gemail.com");
-        List actual = personRepo.peopleInSameCity("Pleven","2010-12-12");
+        List actual = personRepo.peopleInSameCity("Pleven",1290262492000L);
         Person actualFirst = (Person) actual.get(0);
         Person actualSecond = (Person) actual.get(1);
         assertThat(actualFirst.equal(expectedFirst),is(true));

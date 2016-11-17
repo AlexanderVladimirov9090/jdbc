@@ -1,4 +1,4 @@
-package com.clouway.travel_agency.domain;
+package com.clouway.travel_agency.domain_layer;
 
 
 import java.sql.Date;
@@ -25,18 +25,34 @@ public class Trip {
         this.city = new City(city);
     }
 
+    /**
+     * Gets egn of person of that trip.
+     * @return egn.
+     */
     public Long getEgn() {
         return egn;
     }
 
+    /**
+     * Gets date of arrival of the trip.
+     * @return date of arrival.
+     */
     public Date getDateOfArrival() {
         return dateOfArrival;
     }
 
+    /**
+     * Gets date of departure of the trip.
+     * @return date of departure.
+     */
     public Date getDateOfDeparture() {
         return dateOfDeparture;
     }
 
+    /**
+     * Gets city of the trip/
+     * @return city.
+     */
     public City getCity() {
         return city;
     }
