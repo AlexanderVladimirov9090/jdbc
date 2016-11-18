@@ -40,19 +40,8 @@ public class PersistencePersonRepository implements PersonRepository {
      */
     @Override
     public List<Person> peopleStartsWith(String startsWith) {
-        List list = Lists.newArrayList();
-        try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM People WHERE Name LIKE ?")) {
-            statement.setString(1, startsWith + "%");
-            ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                Person person = new Person(resultSet.getString(1), resultSet.getLong(2), resultSet.getInt(3), resultSet.getString(4));
-                list.add(person);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new IllegalStateException("Connection to the database wasn't established");
-        }
-        return list;
+       return dataStore.fetchRows("SELECT * FROM People WHERE Name LIKE ?",
+               resultSet -> new Person(resultSet.getString(1),resultSet.getLong(2),resultSet.getInt(3),resultSet.getString(4)),startsWith+"%");
     }
 
     /**

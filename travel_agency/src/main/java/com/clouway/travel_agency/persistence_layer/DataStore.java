@@ -34,7 +34,6 @@ public class DataStore<T> {
             fillStatement(statement, objects);
             statement.execute();
         } catch (SQLException e) {
-            e.printStackTrace();
             throw new IllegalStateException("Connection to the database wasn't established");
         }
     }
@@ -46,11 +45,12 @@ public class DataStore<T> {
      * @param rowFetcher is used to provide places to store data from database to object.
      * @return list filled with objects.
      */
-    public List<T> fetchRows(String query, RowFetcher<T> rowFetcher,Object... objects) {
+    public List<T> fetchRows(String query, RowFetcher<T> rowFetcher, Object... objects) {
         List list = Lists.newArrayList();
-        try (PreparedStatement statement = dbConnection.prepareStatement(query)) {
+        try  {
+            PreparedStatement statement = dbConnection.prepareStatement(query);
             fillStatement(statement,objects);
-            ResultSet resultSet = statement.executeQuery(query);
+            ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 Optional possibleRow = Optional.of(rowFetcher.fetchRow(resultSet));
                 list.add(possibleRow.get());
