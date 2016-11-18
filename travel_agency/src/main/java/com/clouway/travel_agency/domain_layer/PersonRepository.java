@@ -9,7 +9,7 @@ import java.util.List;
  *         <alexandervladimirov1902@gmail.com>
  *         This interfaceis used to provide methods about Select, Update, Alter and Drop queries for Person object.
  */
-public interface PersonRepo {
+public interface PersonRepository {
 
     /**
      * Gets People from table People from Database.
@@ -36,18 +36,22 @@ public interface PersonRepo {
     List<Person> peopleInSameCity(String city, Long date);
 
     /**
-     * Adds person to Database.
-     *
-     * @param person that is going to be added to Database.
+     * Register person to database.
+     * @param name name of new person.
+     * @param egn egn of new person.
+     * @param age age of the new person.
+     * @param email email of new person
      */
-    void register(Person person);
+    void register(String name, Long egn , int age, String email);
 
     /**
-     * Updates Given Person.
-     *
-     * @param person person that is has to be updated.
+     * Updates existing person from database.
+     * @param name new name of person.
+     * @param egn by eng is been searched.
+     * @param age new age of person.
+     * @param email new email of person
      */
-    void updatePerson(Person person);
+    void updatePerson(String name, Long egn , int age, String email);
 
     /**
      * Deletes person by EGN.
@@ -55,14 +59,4 @@ public interface PersonRepo {
      * @param egn given egn.
      */
     void deletePersonByEGN(Long egn);
-
-    /**
-     * Creates Table for person.
-     */
-    void createTable();
-
-    /**
-     * Deletes Table from Database.
-     */
-    void deleteTable();
 }

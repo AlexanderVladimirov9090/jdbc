@@ -1,7 +1,7 @@
 package com.clouway.travel_agency.domain_layer;
 
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -9,62 +9,50 @@ import java.util.Objects;
  *
  * @author Alexander Vladimirov
  *         <alexandervladimirov1902@gmail.com>
- *  This object represents a record from Database.
- *  Only contains get method to show content pulled from database.
+ *         This object represents a record from Database.
+ *         Only contains get method to show content pulled from database.
  */
 public class Trip {
     private final Long egn;
     private final Date dateOfArrival;
     private final Date dateOfDeparture;
-    private final City city;
+    private final String city;
 
-    public Trip(Long egn, Date dateOfArrival, Date dateOfDeparture, String city) {
+    public Trip(Long egn, java.sql.Date dateOfArrival, java.sql.Date dateOfDeparture, String city) {
         this.egn = egn;
-        this.dateOfArrival = dateOfArrival;
-        this.dateOfDeparture = dateOfDeparture;
-        this.city = new City(city);
+        this.dateOfArrival = java.sql.Date.valueOf(dateOfArrival.toString());
+        this.dateOfDeparture = java.sql.Date.valueOf(dateOfDeparture.toString());
+        this.city = city;
     }
 
-    /**
-     * Gets egn of person of that trip.
-     * @return egn.
-     */
-    public Long getEgn() {
-        return egn;
+    @Override
+    public boolean equals(Object obj) {
+
+        if (obj == null) {
+            return false;
+        }
+        if (!Trip.class.isAssignableFrom(obj.getClass())) {
+            return false;
+        }
+        final Trip other = (Trip) obj;
+        System.out.println(this.egn + " " + other.egn);
+        System.out.println(this.city+ " " + other.city);
+        System.out.println(this.dateOfArrival+ " " + other.dateOfArrival);
+        System.out.println(this.dateOfDeparture+ " "+ other.dateOfDeparture);
+
+        if ((this.egn == null) ? (other.egn != null) : !this.egn.equals(other.egn)) {
+            return false;
+        }
+        return !(this.egn != other.egn && !Objects.equals(this.dateOfArrival.toString(), other.dateOfArrival.toString()) && !Objects.equals(this.dateOfDeparture.toString(), other.dateOfDeparture.toString()) && !Objects.equals(this.city, other.city));
     }
 
-    /**
-     * Gets date of arrival of the trip.
-     * @return date of arrival.
-     */
-    public Date getDateOfArrival() {
-        return dateOfArrival;
-    }
-
-    /**
-     * Gets date of departure of the trip.
-     * @return date of departure.
-     */
-    public Date getDateOfDeparture() {
-        return dateOfDeparture;
-    }
-
-    /**
-     * Gets city of the trip/
-     * @return city.
-     */
-    public City getCity() {
-        return city;
-    }
-    /**
-     * Custom matcher for objects from class Trip.
-     * @param trip compare to.
-     * @return true if two object are equal to all its fields.
-     */
-    public boolean equal(Trip trip) {
-        return Objects.equals(this.egn, trip.egn) &&
-                Objects.equals(this.dateOfArrival.toString(), trip.dateOfArrival.toString())&&
-                Objects.equals(this.dateOfDeparture.toString(), trip.dateOfDeparture.toString()) &&
-                Objects.equals(this.city.getName(), trip.city.getName());
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 53 * hash + (this.egn != null ? this.egn.hashCode() : 0);
+        hash = 53 * hash + (this.dateOfArrival.toString() != null ? this.dateOfDeparture.hashCode() : 0);
+        hash = 53 * hash + (this.dateOfDeparture.toString() != null ? this.dateOfDeparture.hashCode() : 0);
+        hash = 53 * hash + (this.city != null ? this.city.hashCode() : 0);
+        return hash;
     }
 }

@@ -1,7 +1,7 @@
 package com.clouway.travel_agency.persistence_layer;
 
 import com.clouway.travel_agency.domain_layer.Person;
-import com.clouway.travel_agency.domain_layer.PersonRepo;
+import com.clouway.travel_agency.domain_layer.PersonRepository;
 import com.google.common.collect.Lists;
 
 import java.sql.*;
@@ -13,11 +13,11 @@ import java.util.List;
  * @author Alexander Vladimirov
  *         <alexandervladimirov1902@gmail.com>
  */
-public class PersistencePersonRepo implements PersonRepo {
+public class PersistencePersonRepository implements PersonRepository {
     private final Connection connection;
     private final DataStore dataStore;
 
-    public PersistencePersonRepo(Connection connection) {
+    public PersistencePersonRepository(Connection connection) {
         this.connection = connection;
         this.dataStore = new DataStore(connection);
     }
@@ -82,23 +82,29 @@ public class PersistencePersonRepo implements PersonRepo {
     }
 
     /**
-     * Adds person to Database.
+     * Register person to database.
      *
-     * @param person that is going to be added to Database.
+     * @param name  name of new person.
+     * @param egn   egn of new person.
+     * @param age   age of the new person.
+     * @param email email of new person
      */
     @Override
-    public void register(Person person) {
-        dataStore.update("INSERT INTO People VALUES (?,?,?,?)", person.getName(), person.getEgn(), person.getAge(), person.getEmail());
+    public void register(String name, Long egn, int age, String email) {
+        dataStore.update("INSERT INTO People VALUES (?,?,?,?)", name, egn, age, email);
     }
 
     /**
-     * Updates Given Person.
+     * Updates existing person from database.
      *
-     * @param person person that is has to be updated.
+     * @param name  new name of person.
+     * @param egn   by eng is been searched.
+     * @param age   new age of person.
+     * @param email new email of person
      */
     @Override
-    public void updatePerson(Person person) {
-        dataStore.update("UPDATE People SET Name = ?, AGE = ?, Email = ? WHERE EGN = ?", person.getName(), person.getAge(), person.getEmail(), person.getEgn());
+    public void updatePerson(String name, Long egn, int age, String email) {
+        dataStore.update("UPDATE People SET Name = ?, AGE = ?, Email = ? WHERE EGN = ?", name, age, email, egn);
     }
 
     /**
@@ -110,21 +116,4 @@ public class PersistencePersonRepo implements PersonRepo {
     public void deletePersonByEGN(Long egn) {
         dataStore.update("DELETE FROM People WHERE EGN = ?", egn);
     }
-
-    /**
-     * Creates Table for person.
-     */
-    @Override
-    public void createTable() {
-        dataStore.update("CREATE TABLE People ( Name VARCHAR(255), EGN BIGINT NOT NULL, AGE INT NOT NULL, Email VARCHAR(255), PRIMARY KEY (EGN))");
-    }
-
-    /**
-     * Deletes Table from Database.
-     */
-    @Override
-    public void deleteTable() {
-        dataStore.update("DROP TABLE IF EXISTS People");
-    }
 }
-

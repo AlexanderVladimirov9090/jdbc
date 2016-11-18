@@ -30,7 +30,6 @@ public class DataStore<T> {
      * @param objects if needed to push record to database or make table.
      */
     public void update(String query, Object... objects) {
-
         try (PreparedStatement statement = dbConnection.prepareStatement(query)) {
             fillStatement(statement, objects);
             statement.execute();
@@ -47,9 +46,10 @@ public class DataStore<T> {
      * @param rowFetcher is used to provide places to store data from database to object.
      * @return list filled with objects.
      */
-    public List<T> fetchRows(String query, RowFetcher<T> rowFetcher) {
+    public List<T> fetchRows(String query, RowFetcher<T> rowFetcher,Object... objects) {
         List list = Lists.newArrayList();
         try (PreparedStatement statement = dbConnection.prepareStatement(query)) {
+            fillStatement(statement,objects);
             ResultSet resultSet = statement.executeQuery(query);
             while (resultSet.next()) {
                 Optional possibleRow = Optional.of(rowFetcher.fetchRow(resultSet));

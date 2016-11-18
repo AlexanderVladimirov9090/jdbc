@@ -1,11 +1,11 @@
 package com.clouway.travel_agency;
 
 import com.clouway.travel_agency.domain_layer.Person;
-import com.clouway.travel_agency.domain_layer.PersonRepo;
-import com.clouway.travel_agency.domain_layer.Trip;
-import com.clouway.travel_agency.domain_layer.TripRepo;
-import com.clouway.travel_agency.persistence_layer.PersistencePersonRepo;
-import com.clouway.travel_agency.persistence_layer.PersistenceTripRepo;
+import com.clouway.travel_agency.domain_layer.PersonRepository;
+import com.clouway.travel_agency.domain_layer.TripRepository;
+import com.clouway.travel_agency.persistence_layer.DataStore;
+import com.clouway.travel_agency.persistence_layer.PersistencePersonRepository;
+import com.clouway.travel_agency.persistence_layer.PersistenceTripRepository;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -28,51 +28,52 @@ public class SelectPersonTest {
     @Rule
     public DataBaseConnectionRule dataBaseConnectionRule = new DataBaseConnectionRule();
     private Connection connection = dataBaseConnectionRule.connection;
-    private PersonRepo personRepo = new PersistencePersonRepo(connection);
-    private TripRepo tripRepo = new PersistenceTripRepo(connection);
+    private PersonRepository personRepository = new PersistencePersonRepository(connection);
+    private TripRepository tripRepository = new PersistenceTripRepository(connection);
+    private DataStore dataStore = new DataStore(connection);
+
     public SelectPersonTest() throws SQLException {
     }
+
     @Before
     public void createPeopleTableAndPopulate() {
-        tripRepo.deleteTable();
-        personRepo.deleteTable();
-        personRepo.createTable();
-        tripRepo.createTable();
-        personRepo.register(new Person("Gosho",9090909090L, 23, "email@email.com"));
-        personRepo.register(new Person("Pesho", 9191919191L, 27, "gemail@gemail.com"));
-        personRepo.register(new Person("Petur",9292929292L,28,"semail@semail.com"));
-        tripRepo.register(new Trip(9090909090L,new Date(1290262492000L),new Date(1290694492000L), "Pleven"));
-        tripRepo.register(new Trip(9191919191L,new Date(1290262492000L),new Date(1290694492000L), "Pleven"));
+        dataStore.update("DROP TABLE IF EXISTS Trip");
+        dataStore.update("TRUNCATE TABLE People");
+        personRepository.register("Gosho", 9090909090L, 23, "email@email.com");
+        personRepository.register("Pesho", 9191919191L, 27, "gemail@gemail.com");
     }
 
     @Test
     public void happyPath() throws ClassNotFoundException, SQLException {
-        Person expected = new Person("Gosho", 9090909090L, 23, "email@email.com");
-        List actual = personRepo.getAll();
-        Person actualPerson = (Person) actual.get(0);
-        assertThat(actualPerson.equal(expected), is(true));
+        Person expectedFirst = new Person("Gosho", 9090909090L, 23, "email@email.com");
+        Person expectedSecond = new Person("Pesho", 9191919191L, 27, "gemail@gemail.com");
+        List actual = personRepository.getAll();
+        Person actualFirst = (Person) actual.get(0);
+        Person actualSecond = (Person) actual.get(1);
+        assertThat(actualFirst.equals(expectedFirst), is(true));
+        assertThat(actualSecond.equals(expectedSecond), is(true));
     }
 
     @Test
     public void peopleStartsWith() throws ClassNotFoundException, SQLException {
         Person expectedFirst = new Person("Pesho", 9191919191L, 27, "gemail@gemail.com");
-        Person expectedSecond=new Person("Petur",9292929292L,28,"semail@semail.com");
-        List actual = personRepo.peopleStartsWith("P");
+        List actual = personRepository.peopleStartsWith("P");
         Person actualFirst = (Person) actual.get(0);
-        Person actualSecond = (Person) actual.get(1);
-        assertThat(actualFirst.equal(expectedFirst), is(true));
-        assertThat(actualSecond.equal(expectedSecond),is(true));
+        assertThat(actualFirst.equals(expectedFirst), is(true));
     }
 
 
     @Test
     public void bySameCity() {
-        Person expectedFirst = new Person("Gosho", 9090909090L, 23,"email@email.com" );
+        dataStore.update("CREATE TABLE Trip ( EGN BIGINT NOT NULL, DateOfArrival DATE NOT NULL, DateOfDeparture DATE NOT NULL, City VARCHAR(56), FOREIGN KEY (EGN) REFERENCES People(EGN))");
+        tripRepository.register(9090909090L, new Date(1290262492000L), new Date(1290694492000L), "Pleven");
+        tripRepository.register(9191919191L, new Date(1290262492000L), new Date(1290694492000L), "Pleven");
+        Person expectedFirst = new Person("Gosho", 9090909090L, 23, "email@email.com");
         Person expectedSecond = new Person("Pesho", 9191919191L, 27, "gemail@gemail.com");
-        List actual = personRepo.peopleInSameCity("Pleven",1290262492000L);
+        List actual = personRepository.peopleInSameCity("Pleven", 1290262492000L);
         Person actualFirst = (Person) actual.get(0);
         Person actualSecond = (Person) actual.get(1);
-        assertThat(actualFirst.equal(expectedFirst),is(true));
-        assertThat(actualSecond.equal(expectedSecond),is(true));
+        assertThat(actualFirst.equals(expectedFirst), is(true));
+        assertThat(actualSecond.equals(expectedSecond), is(true));
     }
 }
