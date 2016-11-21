@@ -22,3 +22,7 @@ hs_err_pid*
 /travel_agency/gradle/
 /travel_agency/build/
 /travel_agency/PerosnScenario
+/article_history/.gradle/
+/article_history/gradlew.bat
+/article_history/gradlew
+/article_history/gradle/
