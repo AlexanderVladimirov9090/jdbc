@@ -32,16 +32,16 @@ public class PersistenceArticleRepositoryTest {
     @Before
     public void cleanAndPopulateTable(){
         dataStore.update("TRUNCATE TABLE article");
-        articleRepository.insert(1,"title1","body1","autor1");
-        articleRepository.insert(2,"title2","body2","autor2");
-        articleRepository.insert(3,"title3","body3","autor3");
+        articleRepository.insert(new Article(1,"title1","body1","autor1"));
+        articleRepository.insert(new Article(2,"title2","body2","autor2"));
+        articleRepository.insert(new Article(3,"title3","body3","autor3"));
 
     }
 
     @Test
     public void updateArticle(){
         Article expected = new Article(1,"newTitle","newBody","newString");
-        articleRepository.update("newTitle","newBody","newString",1);
+        articleRepository.update(new Article(1,"newTitle","newBody","newString"));
         List<Article> articles = articleRepository.allArticles();
         Article actual = articles.get(0);
         assertThat(actual.equals(expected),is(true));

@@ -8,12 +8,14 @@ import java.util.Objects;
  *
  * @author Alexander Vladimirov
  *         <alexandervladimirov1902@gmail.com>
+ * This Domain Object class for acticles from and for database.
  */
 public class Article {
-    private final Integer id;
-    private final String title;
-    private final String body;
-    private final String authorName;
+    public final Integer id;
+    public final String title;
+    public final String body;
+    public final String authorName;
+
     public Article(Integer id, String title, String body, String authorName) {
         this.id = id;
         this.title = title;
@@ -22,20 +24,20 @@ public class Article {
     }
 
 
-@Override
-public boolean equals(Object obj) {
-    if (obj == null) {
-        return false;
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (!Article.class.isAssignableFrom(obj.getClass())) {
+            return false;
+        }
+        final Article other = (Article) obj;
+        if ((this.id == null) ? (other.id != null) : !this.id.equals(other.id)) {
+            return false;
+        }
+        return !(!Objects.equals(this.title, other.title) && !Objects.equals(this.body, other.body) && !Objects.equals(this.authorName, other.authorName));
     }
-    if (!Article.class.isAssignableFrom(obj.getClass())) {
-        return false;
-    }
-    final Article other = (Article) obj;
-    if ((this.id == null) ? (other.id != null) : !this.id.equals(other.id)) {
-        return false;
-    }
-    return !(!Objects.equals(this.title, other.title) && !Objects.equals(this.body, other.body) && !Objects.equals(this.authorName, other.authorName));
-}
 
     @Override
     public int hashCode() {

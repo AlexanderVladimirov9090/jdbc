@@ -35,25 +35,19 @@ public class PersistenceArticleRepository implements ArticleRepository {
     /**
      * Insert in to database Article.
      *
-     * @param id         of new article.
-     * @param title      of new article.
-     * @param body       of new article.
-     * @param authorName of new article.
+     * @param article new article that is going to be inserted.
      */
-    public void insert(int id, String title, String body, String authorName) {
-        dataStore.update("INSERT INTO article VALUES (?,?,?,?)", id, title, body, authorName);
+    public void insert(Article article) {
+        dataStore.update("INSERT INTO article VALUES (?,?,?,?)", article.id, article.title, article.body, article.authorName);
     }
 
     /**
-     * Updates Article in databse.
+     * Updates Article in database.
      *
-     * @param title      new title.
-     * @param body       new body.
-     * @param authorName new name of author.
-     * @param id         search parammeter.
+     * @param article    with new updated fields to be pushed in to database.
      */
-    public void update(String title, String body, String authorName, int id) {
-    dataStore.update("UPDATE article SET Title = ?, Body = ?, Author_FirstName = ? WHERE ID = ? ",title,body,authorName,id);
+    public void update(Article article) {
+    dataStore.update("UPDATE article SET Title = ?, Body = ?, Author_FirstName = ? WHERE ID = ? ",article.title,article.body,article.authorName,article.id);
     }
 
     /**

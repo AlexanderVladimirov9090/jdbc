@@ -20,20 +20,15 @@ public interface ArticleRepository {
 
     /**
      * Insert in to database Article.
-     * @param id of new article.
-     * @param title of new article.
-     * @param body of new article.
-     * @param authorName of new article.
+     * @param article  new article that is inserted to database.
      */
-    void insert(int id, String title ,String body, String authorName);
+    void insert(Article article);
     /**
      * Updated article by searched by id.
      *
-     * @param Title      new title.
-     * @param body       new body.
-     * @param authorName new name of author.
+     * @param article     article with updated fields to be pushed to database.
      */
-    void update(String Title, String body, String authorName, int id);
+    void update(Article article);
 
     /**
      * Gets history of Articles changes.

@@ -7,13 +7,14 @@ import java.util.Objects;
  *
  * @author Alexander Vladimirov
  *         <alexandervladimirov1902@gmail.com>
+ * This Domain Object class for acticles from and for database.
  */
 public class ArticleHistory {
-    private final Integer id;
-    private final Integer articleId;
-    private final String title;
-    private final String body;
-    private final String authorName;
+    public final Integer id;
+    public final Integer articleId;
+    public final String title;
+    public final String body;
+    public final String authorName;
 
     public ArticleHistory(Integer id, Integer articleId, String title, String body, String authorName) {
         this.id = id;
@@ -31,6 +32,7 @@ public class ArticleHistory {
             return false;
         }
         final ArticleHistory other = (ArticleHistory) obj;
+
         if ((this.id == null) ? (other.id != null) : !this.id.equals(other.id)) {
             return false;
         }
